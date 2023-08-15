@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Gestion des taches</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+    <link rel="stylesheet" href="{% static 'style/main.css' %}">
+</head>
+<body class="white">
+    <div class="header">
+        <a class="no-underline" href="{% url 'projects' %}">
+            <h1 class="logo">G-Taches</h1>
+        </a>
+    </div>
+    {% block content %}
+
+    {% endblock content %}
+    
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    <h2 class="page-title">{{project.title}}</h2>
+    <div class="main-box">
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+        <form class="form" action="" method="POST">
+            {% csrf_token %}
+            <div style="display: flex; flex-direction: column;">
+            {{form}}
+                <div class="flex">
+                    <input type="submit", value="{{btn}}">
+                    
+                    {% if btn == 'Sauvegarder' %}
+                    <a class="no-underline" href="{% url 'delete_task' project.id task.id %}">
+                        <div class="button delete">
+                            <p>
+                                Supprimer
+                            </p>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    {% for error in errors %}
+        {{error}}
+    {% endfor %}
+    </div>
+    
+    
+</div>
+
+{% if btn == 'Sauvegarder' %}
+{% include 'base/participants.html' %}
+{% else %}
+    {% include 'base/participants.html' %}
+{% endif %}
+{% endblock content %}

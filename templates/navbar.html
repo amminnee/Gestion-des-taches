@@ -1,0 +1,25 @@
+<div class="box">
+    <div class="nav-bar vflex">
+        <a class="no-underline full" href="{% url 'projects' %}">
+            <div class="nav-bar-element full {% if selected == 'P' %}selected{% endif %}">
+                <p>Mes projet</p>
+            </div>
+        </a>
+        <a class="no-underline full" href="{% url 'tasks' %}">
+            <div class="nav-bar-element full {% if selected == 'T' %}selected{% endif %}">
+                <p>Mes taches</p>
+            </div>
+        </a>
+        <a class="no-underline full" href="{% url 'profile' request.user.id %}">
+            <div class="nav-bar-element full {% if selected == 'U' %}selected{% endif %}">
+                <p>Profile</p>
+            </div>
+        </a>
+        <div class="h-separator"></div>
+        <a class="no-underline full" href="{% url 'logout' %}">
+            <div class="nav-bar-element full">
+                <p>Déconnection</p>
+            </div>
+        </a>
+    </div>
+</div>

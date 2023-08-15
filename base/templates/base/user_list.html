@@ -1,0 +1,37 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    <p class="page-title">{{project.title}}</p>
+    <div class="main-box">
+        <p class="username blue task">{{task.title}}</p>
+        {% for user in project.participants.all %}
+        <div class="hflex">
+            <div class="flex user-box">
+                <img class="avatar mid" src="{{user.profile.avatar.url}}" alt=" ">
+                <div class="user-info vflex">
+                    <p class="small-text">{{user.first_name}} {{user.last_name}}</p>
+                    <h3 class="username blue">{{user.username}}</h3>
+                </div>
+            </div>
+            {% if user not in task.participants.all %}
+                <form class="user-form" action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{user.id}}">
+                    <input type="submit" name="" id="" value="Ajouter">
+                </form>
+            {% else %}
+                <div class="user-btn member">
+                    <p>membre</p>
+                </div>
+                
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+    
+</div>
+
+{% include 'base/participants.html' %}
+{% endblock content %}

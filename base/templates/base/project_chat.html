@@ -1,0 +1,39 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+{% include 'base/project_top_bar.html' %}
+<div class="page-layout">
+    <div class="relative ">
+    
+    <h2 class="page-title top-space">{{project.title}}</h2>
+        <div class="message-box" id="message-container">
+            {% for message in messages %}
+                <div class="message-unit">
+                    <div class="message-top">
+                        <a class="no-underline" href="{% url 'profile' message.user.id %}">
+                            <div class="message-top">
+                                <img class="avatar mid" src="{{message.user.profile.avatar.url}}" alt="">
+                                <h4 class="username blue space">{{message.user.username}}</h4>
+                            </div>
+                        </a>
+                        
+                        <p class="small-text">{{message.created}}</p>
+                    </div>
+                    <p class="message-body">{{message.body}}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="message-submit-box">
+            <form class="message-form" action="" method="POST">
+                {% csrf_token %}
+                <input class="message-input" type="text" name="body" id="" placeholder="Tapez votre message">
+            </form>
+        </div>
+    </div>
+        
+
+</div>
+{% include 'base/participants.html' %}
+
+{% endblock content %}

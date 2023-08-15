@@ -1,0 +1,75 @@
+{% extends 'main_2.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="page-layout">
+        <h2 class="page-title">Projets</h2>
+        
+        
+        <div class="vflex space">
+            <a class="no-underline hflex" href="{% url 'create_project' %}">
+                <div class="new hflex">
+                    <p class="username">Nouveau projet</p>
+                    <img class="plus-icon" src="{% static 'images/addition-operation.png'%}" alt="">
+                </div>
+            </a>
+            {% for project in projects %}
+                <div class="{% if request.user == project.host %}project-host{% else %}project{% endif %}">
+                    <div>
+                        <div class="hflex">
+                            <div class="hflex">
+                                <a class="no-underline hflex" href="{% url 'profile' project.host.id %}">
+                                    <img class="avatar mid" src="{{ project.host.profile.avatar.url }}" alt=" ">
+                                    <h3 class="project-user">{{project.host.username}}</h3>
+                                </a>
+                            </div>
+                            
+                            <p class="small-text">{{project.deadline|timeuntil}}</p>
+                        </div>
+                        <div>
+                            <a class="no-underline" href="{% url 'project_tasks' project.id %}">
+                                <h2 class="large-title">{{project.title}}</h2>
+                            </a>
+                        </div>
+                        <div class="hflex center"><div class="h-separator"></div></div>
+                        <div class="hflex">
+                            <p class="small-text">{{project.task_set.all.count}} taches</p>
+                            <div>
+                                {% for user in project.participants.all|slice:":5" %}
+                                    <a class="no-underline" href="{% url 'profile' user.id %}">
+                                        <img class="avatar small" src="{{user.profile.avatar.url}}" alt=" ">
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vflex center">
+                        <h1 class="pourcentage">{{project.pourcentage}}%</h1>
+                        <div class="background">
+                            <div class="progress-bar {% if project.pourcentage < 25 %}red{% elif project.pourcentage < 100 %}orange{% else %}green{% endif %}" style="width: {% if project.pourcentage > 10 %}{{project.pourcentage}}{% else %}10{% endif %}px;"></div>
+                        </div>
+                    </div>
+                    
+                    {% if user == project.host %}
+                        <div class="icon-box vflex">
+                            <a class="" href="{% url 'update_project' project.id %}">
+                                <img class="mid-icon" src="{% static 'images/pencil.png' %}" alt="">
+                            </a>
+                            <a class="" href="{% url 'delete_project' project.id %}">
+                                <img class="mid-icon" src="{% static 'images/delete.png' %}" alt="">
+                            </a>
+                        </div>
+                        
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+
+    {% include 'base/activity.html' %}
+    
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+    <div class="page-layout">
+        <p class="page-title">Profile</p>
+        <div class="main-box">
+            <div class="vflex">
+                <img class="avatar large" src="{{user.profile.avatar.url}}" alt=" ">
+                <h3 class="full-name">{{user.first_name}} {{user.last_name}}</h3>
+                <div style="display: flex;">
+                    {% if request.user == user %}
+                    <div class="round-btn right">
+                        <a class="no-underline" href="{% url 'update_profile' user.id %}">
+                            <p>Modifier</p>
+                        </a>
+                    </div>
+                        
+                    {% endif %}
+                    <div class="round-btn-status flex">
+                        <div class="profile-status {{user.profile.status}}"></div>
+                        {% if user == request.user %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{user.profile.status}}" name="status">
+                                <input class="status-text form" type="submit" value="{{user.profile.get_status_display}}">
+                            </form>
+                        {% else %}
+                            <p class="status-text">{{user.profile.get_status_display}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        
+        
+            <h2 class="username blue large">{{user.username}}</h2>
+            <h4 class="label">Profile</h4>
+            <p class="form-text">
+                {{user.profile.profil}}
+            </p>
+            <h4 class="label">compétences</h4>
+            <p class="form-text">
+                {{user.profile.competences}}
+            </p>
+        </div>
+    </div>
+    {% include 'base/activity.html' %}
+    
+{% endblock content %}

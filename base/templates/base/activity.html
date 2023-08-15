@@ -1,0 +1,28 @@
+<div class="box">
+    <div class="side-bar box">
+        <h2 class="page-title">Activités</h2>
+        <div class="activity-box vflex">
+            {% for message in activity_msgs %}
+                {% if request.user in message.project.participants.all %}
+                    <div class="flex start activity-unit">
+                        <a class="no-underline" href="{% url 'profile' message.user.id %}"><img class="avatar mid" src="{{message.user.profile.avatar.url}}" alt=" "></a>
+                        <div>
+                            <div class="flex user-date">
+                                <p class="project-user"><a class="no-underline project-user" href="{% url 'profile' message.user.id %}">{{message.user.username}}</a></p>
+                                <p class="small-text">{{message.created}}</p>
+                            </div>
+                            <p class="text"><strong><a class="no-underline black" href="{% url 'profile' message.user.id %}">{% if message.user.first_name %}{{message.user.first_name}} {{messsage.user.last_name}}
+                                {% else %}{{message.user.username}}{% endif %}</a></strong> a envoyer un message dans 
+                                <strong><a class="no-underline black" href="{% url 'project_chat' message.project.id %}">{{message.project.title}}</a></strong>
+                            </p>
+                            <div class="activity-body">
+                                <p>{{message}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-separator text"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    <p class="page-title">{{project.title}}</p>
+    <div class="main-box">
+            <form class="form" action="" method="GET">
+                <div class="flex">
+                    <input class="search" type="search" placeholder="Chercher un utilisateur" name="q">
+                </div>
+            </form>
+        {% for user in user_list %}
+            {% if user != request.user %}
+            <div class="hflex">
+                <div class="flex user-box">
+                    <img class="avatar mid" src="{{user.profile.avatar.url}}" alt=" ">
+                    <div class="user-info vflex">
+                        <p class="small-text">{{user.first_name}} {{user.last_name}}</p>
+                        <h3 class="username blue">{{user.username}}</h3>
+                    </div>
+                </div>
+                {% if user not in project.participants.all %}
+                    {% if user.id in receivers %}
+                        <div class="user-btn invite">
+
+                            <p>Invité</p>
+                        </div>
+                    {% else %}
+                        <form class="user-form" action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <input type="submit" value="Inviter">
+                        </form>
+                    {% endif %}
+                {% else %}
+                    <div class="user-btn member">
+
+                        <p>membre</p>
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+</div>
+
+{% include 'base/participants.html' %}
+{% endblock content %}

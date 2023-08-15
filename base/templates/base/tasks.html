@@ -1,0 +1,160 @@
+{% extends 'main_2.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if project %}
+    {% include 'base/project_top_bar.html' %}
+{% endif %}
+
+<div class="page-layout">
+    {% if project %}
+        
+        <p class="page-title top-space">{{project.title}}</p>
+        
+        <div class="flex">
+            {% if request.user == project.host%}
+            <a class="no-underline" href="{% url 'create_task' project.id %}">
+                <div class="new hflex larger">
+                    <p class="username">Ajouter une tache</p>
+                    <img class="plus-icon" src="{% static 'images/addition-operation.png' %}" alt="">
+                </div>
+            </a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p class="page-title">Mes taches</p>
+        
+    {% endif %}
+    
+    <div class="filters">
+        {% if project %}
+            <a class="no-underline" href="{% url task project.id %}">
+                <div class="filter flex {% if filter == none %}selected{%endif%}">
+                    <p>
+                        Tous
+                    </p>
+                </div>
+            </a>
+            <a class="no-underline" href="{% url task project.id %}?q=T">
+                <div class="filter flex {% if filter == 'T' %}selected{%endif%}">
+                    <p>
+                        Terminé
+                    </p>
+                </div>
+            </a>
+            <a class="no-underline" href="{% url task project.id %}?q=C">
+                <div class="filter flex {% if filter == 'C' %}selected{%endif%}">
+                    <p>
+                        En cours
+                    </p>
+                </div>
+            </a>
+            <a class="no-underline" href="{% url task project.id %}?q=A">
+                <div class="filter flex {% if filter == 'A' %}selected{%endif%}">
+                    <p>
+                        En attente
+                    </p>
+                </div>
+            </a>
+
+        {% else %}
+
+            <a class="no-underline" href="{% url task %}">
+                <div class="filter flex {% if filter == none %}selected{%endif%}">
+                    <p>
+                        Tous
+                    </p>
+                </div>
+            </a>
+            <a class="no-underline" href="{% url task %}?q=T">
+                <div class="filter flex {% if filter == 'T' %}selected{%endif%}">
+                    <p>
+                        Terminé
+                    </p>
+                </div>
+            </a>
+            <a class="no-underline" href="{% url task %}?q=C">
+                <div class="filter flex {% if filter == 'C' %}selected{%endif%}">
+                    <p>
+                        En cours
+                    </p>
+                </div>
+                
+            </a>
+            <a class="no-underline" href="{% url task %}?q=A">
+                <div class="filter flex {% if filter == 'A' %}selected{%endif%}">
+                    <p>
+                       En attente 
+                    </p>
+                </div>
+                
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="task-box">
+        {% for task in tasks %}
+        
+        <div class="task-unit {{task.status}}">
+            <div>
+                {% if my_tasks %}
+                <a class="no-underline" href="{% url 'project_tasks' task.project.id %}">
+                    <p class="project-title black">
+                        {{task.project.title}}
+                    </p>
+                </a>
+                <div class="flex">
+                    <div class="h-separator"></div>
+                </div>
+                
+                {% endif %}
+            
+
+            <div class="task-title">
+                {% if request.user == project.host or request.user in task.participants.all %}
+                <a class="no-underline full" href="{% url 'task_description' task.project.id task.id %}">
+                    <h2 class="large-title">{{task.title}}</h2>
+                </a>
+
+                {% else %}
+                    <h2 class="large-title">{{task.title}}</h2>
+                {% endif %}
+            </div>
+            
+
+            <p class="task-description">{{task}}</p>
+            </div>
+
+
+            <div>
+                <div class="task-avatar flex">
+                    {% for user in task.participants.all %}
+                        <a class="no-underline" href="{% url 'profile' user.id %}">
+                            <img class="avatar small space" src="{{user.profile.avatar.url}}" alt="">
+                        </a>
+                        
+                    {% endfor %}
+                </div>
+            <div class="vflex">
+                <div class="h-separator task"></div>
+                <p class="task-status {{task.status}}">{{task.get_status_display}}</p>
+            </div>
+            
+            
+        </div>
+            </div>
+            
+               
+
+        {% endfor %}
+    </div>
+</div>
+
+{% if my_tasks %}
+    {% include 'base/activity.html' %}
+{% else %}
+    {% include 'base/participants.html' %}
+{% endif %}
+
+{% endblock content %}

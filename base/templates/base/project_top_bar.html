@@ -1,0 +1,26 @@
+    <div class="top-bar">
+        <a class="no-underline full-height black " href="{% url 'project_tasks' project.id %}">
+            <div class="flex top-bar-item {% if selected == 'T' %}selected{% endif %}" href="{% url 'project_tasks' project.id %}">
+                <p>
+                    Taches
+                </p>
+            </div>
+        </a>
+
+        <a class=" no-underline full-height black" href="{% url 'project_chat' project.id %}">
+            <div class="flex top-bar-item {% if selected == 'C' %}selected{% endif %}" href="{% url 'project_tasks' project.id %}">
+                <p>
+                    Chat
+                </p>
+            </div>
+            
+        </a>
+        <a class="full-height no-underline black" href="{% url 'project_description' project.id %}">
+            <div class="flex top-bar-item {% if selected == 'D' %}selected{% endif %}" href="{% url 'project_tasks' project.id %}">
+                <p>
+                    Description
+                </p>
+            </div>
+            
+        </a>
+    </div>

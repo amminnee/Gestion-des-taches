@@ -1,0 +1,56 @@
+{% load static %}
+
+<div>
+    <div class="side-bar full">
+        <h2 class="page-title">{{users}}</h2>
+        <div class="vflex">
+        {% if request.user == project.host %}
+
+                {% if users == 'Participants' %}
+                    <a class="no-underline " href="{% url 'invite_user' project.id %}">
+                        <div class="new participants flex">
+                            <p class="username">
+                                Inviter
+                            </p>
+                            <img class="plus-icon" src="{% static 'images/addition-operation.png' %}" alt="">
+                        </div>
+                        
+                    </a>
+                                
+                {% else %}
+                    <a class="no-underline" href="{% url 'add_user' project.id task.id %}">
+                        <div class="new participants flex">
+                            <p class="username">
+                                Ajouter
+                            </p> 
+                            <img class="plus-icon" src="{% static 'images/addition-operation.png' %}" alt="">
+                        </div>
+                        
+                    </a>
+                            
+                {% endif %}
+            <div class="h-separator"></div>
+        {% endif %}
+
+
+        <p class="small-text participants">{{object.participants.all.count}} {{users}}</p>
+        </div>
+            
+        
+        {% for user in object.participants.all %}
+            <a class="no-underline " href="{% url 'profile' user.id %}">
+                <div class="flex user-box">
+                    <div class="relative">
+                        <img class="avatar mid" src="{{user.profile.avatar.url}}" alt=" ">
+                        <div class="active-status {{user.profile.status}}"></div>
+                    </div>
+                    <div class="user-info vflex">
+                        <p class="small-text">{{user.first_name}} {{user.last_name}}</p>
+                        <h3 class="username blue">{{user.username}}</h3>
+                    </div>
+                </div>
+            </a>
+            
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,55 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    
+    <h2 class="page-title">{{project.title}}</h2>
+    <div class="main-box">
+        <h3 class="username blue task">{{task.title}}</h3>
+        <h3 class="label">Description</h3>
+        <p class="form-text"> 
+            {{task.description}}
+        </p>
+        <h3 class="label">Date limite</h3>
+        <p class="form-text"> 
+            {{task.deadline}}
+        </p>
+        <h3 class="label">Statut</h3>
+        <p class=" task-status desc {{task.status}}"> 
+            {{task.get_status_display}}
+        </p>
+        
+        <div class="flex status">
+            
+            {% if request.user == project.host or request.user in task.participants.all %}
+                {% if value %}
+                    <div class="round-btn {{value}} status">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input class="task-value {{value}}" type="submit" value="{{value}}">
+                        </form>
+                    </div>
+                    
+                {% if request.user == project.host%}
+                <div class="flex">
+                    <div class="round-btn">
+                            <a class="no-underline" href="{% url 'update_task' project.id task.id %}">
+                                <p>
+                                    Modifier
+                                </p>
+                            </a>
+                    </div>
+                </div>
+                {% endif %}
+                    
+                {% endif %}
+            {% endif %}
+        </div>
+        
+
+    </div>
+</div>
+{% include 'base/participants.html' %}
+
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% extends 'main_1.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-layout grid">
+    <div>
+        {% for error in errors%}
+        {{error}}
+    {% endfor %}
+    <form class="form login" action="" method="POST">
+        {% csrf_token %}
+        <div class="vflex login">
+            <div class="flex">
+                <div>
+                    <p class="login label">{{form.first_name.label}}</p> 
+                    <div class="flex start">{{form.first_name}}</div>
+                </div>
+                <div>
+                    <div class="flex start">
+                        <p class="login label">{{form.last_name.label}}</p> 
+                    </div>
+                     <div class="flex start">{{form.last_name}}</div>
+                </div>
+            </div>
+            <div class="flex start">
+                <p class="login label">{{form.username.label}}</p>
+            </div> {{form.username}}
+            {% if 'username' in errors %}
+                <p>Nom d'utilisateur invalide!</p>
+            {% endif %}
+            <div class="flex start">
+                <p class="login label">{{form.email.label}}</p>
+            </div> {{form.email}}
+            {% if 'email' in errors %}
+                <p>Adresse email invalide!</p>
+            {% endif %}
+            <div class="flex start">
+                <p class="login label">{{form.password1.label}}</p>
+            </div> {{form.password1}}
+            <div class="flex start">
+
+            </div><p class="login label">{{form.password2.label}}</p> {{form.password2}}
+            {% if 'password2' in errors %}
+                <p>Mot de passe invalide!</p>
+            {% endif %}
+            <div class="flex center">
+
+                <input type="submit" value="Creer">
+            </div>
+        </div>
+    </form>
+    </div>
+    <div>
+        <h1 style="margin: 20px 60px ;font-size: 34px;">Creez votre espace de gestion de projets</h1>
+        <img style="width: 90%;" src="{% static 'images/8104960.jpg' %}" alt="">
+    </div>
+    
+</div>
+{% endblock content %}

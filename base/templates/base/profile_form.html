@@ -1,0 +1,33 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    <p class="page-title">Modifier votre profile</p>
+    <div class="main-box">
+        <div class="flex">
+
+            <img class="avatar large" src="{{user.profile.avatar.url}}" alt="">
+        </div>
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+        <form class="form" action="" method="POST">
+            {% csrf_token %}
+            <div style="display: flex; flex-direction: column;">
+                {{profile_form}}
+                {{user_form}}
+                <div class="flex">
+
+                    <input type="submit", value="Sauvegarder">
+                </div>
+            </div>
+        </form> 
+    </div>
+       
+</div>
+
+
+{% include 'base/activity.html' %}
+
+{% endblock content %}

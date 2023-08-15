@@ -1,0 +1,29 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    <p class="page-title">Supprimer</p>
+    <div class="main-box">
+        <form action="" method="POST">
+            {% csrf_token%}
+            <p class="delete-text">Voulez-vous supprimer {{object_name}}:<strong>{{name}}</strong></p>
+            
+            <div class="flex">
+                <a class="no-underline" href="{{request.META.HTTP_REFERER}}">
+                    <div class="button cancel">
+                        <p>
+                            Annuler
+                        </p>
+                    </div>
+                    
+                </a>
+                <input class="button delete" type="submit" name="" id="" value="Supprimer">
+            </div>
+        </form>
+    </div>
+    
+</div>
+{% include 'base/participants.html' %}
+
+{% endblock content %}

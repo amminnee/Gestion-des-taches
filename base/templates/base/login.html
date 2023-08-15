@@ -1,0 +1,44 @@
+{% extends 'main_1.html' %}
+
+{% block content %}
+
+<div class="page-layout">
+    <div class="grid login">
+        <div>
+            <h1 class="big-title">gerer vos projet et vos taches effectivement</h1>
+            <p class="wrap">La plateform de gestion de projets et de taches pour faciliter le travait en équipe.</p>
+        </div>
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+
+            <form class="form" action="" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-space">
+                        <p class="label login">{{field.label_tag}}</p>
+                        {{field}}
+                    </div>
+                {% endfor %}
+                <div class="flex">
+
+                    <input type="submit" value="Connexion">
+                </div>
+            </form>
+            <div class="flex some-space">
+                <p class="absolute white wide">ou</p>
+                <div class="h-separator login"></div>
+            </div>
+
+            <div class="flex">
+                <a class="no-underline black create" href="{% url 'register' %}">Créer un compte</a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des taches</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="{% static 'js/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'style/main.css' %}">
+
+</head>
+<body>
+
+    <div class="header">
+        <a class="no-underline" href="{% url 'projects' %}">
+            <h1 class="logo">G-Taches</h1>
+        </a>
+
+        <form class="search-form" action="{% url 'projects' %}" method="GET">
+            <input class="search-bar" type="search" placeholder="Chercher un projet" name="q"> 
+        </form>
+
+        <div class="flex">
+            <div class="bell-box flex center">
+                <a href="{% url 'notifications' %}">
+                    <img class="bell" src="{% static 'images/notification.png' %}" alt=""> 
+                </a>
+                {% if unread > 0 %}
+                <div class="unread">{{unread}}</div>
+                {% endif %} 
+            </div>
+            <div class="flex center">
+                <a class="flex center no-underline" href="{% url 'profile' request.user.id %}">
+                    <div class="relative">
+                        <img class="avatar mid" src="{{request.user.profile.avatar.url}}" alt="">
+                        <div class="active-status {{request.user.profile.status}}"></div>
+                    </div>
+                    <p class="username top">@{{request.user.username}}</p>
+                </a>
+            </div>
+        </div>  
+    </div>         
+            
+    <div class="main-layout">
+        {% include 'navbar.html'%}
+            
+        
+        {% block content %}
+        {% endblock content %}
+
+    </div>
+
+    
+</body>
+</html>

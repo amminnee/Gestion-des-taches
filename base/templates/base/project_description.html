@@ -1,0 +1,34 @@
+{% extends 'main_2.html' %}
+
+{% block content %}
+
+{% include 'base/project_top_bar.html' %}
+<div class="page-layout">
+    
+    <h2 class="page-title top-space">{{project.title}}</h2>
+    <div class="main-box">
+        <h3 class="label">Description</h3>
+        <p class="form-text">{{project.description}}</p>
+        <h3 class="label">Attachment</h3>
+        <p class="form-text">{{project.attachment}}</p>
+        <h3 class="label">Date limite</h3>
+        <p class="form-text">{{project.deadline}}</p>
+    </div>
+    
+    {% if request.user == project.host%}
+    <div class="flex">
+        <a class="no-underline" href="{% url 'update_project' project.id %}">
+            <div class="round-btn">
+                <p>
+                    Modifier
+                </p>
+            </div>
+            
+        </a>
+    </div>
+        
+    {% endif %}
+</div>
+{% include 'base/participants.html' %}
+
+{% endblock content %}
