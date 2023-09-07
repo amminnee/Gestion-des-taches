@@ -5,76 +5,85 @@
         <h2 class="page-title">Notifications</h2>
         
         <div class="main-box">
+
             {% for notification in notifications %}
-            <div class="hflex notification">                
-                    {% if notification.invit %}
-                        {% if notification.title == 'A' %}
-                            <div class="flex">
-                                <div class="notification-bar {% if notification.invit %}blue{% endif%}"></div>
-                                <p>
-                                    <strong><a class="no-underline black" href="{% url 'profile' notification.invit.receiver.id %}">
-                                        {{ notification.invit.receiver.username }}
-                                    </a></strong> a accepté votre invitation au projet: 
-                                    <strong><a class="no-underline black" href="{% url 'project_tasks' notification.invit.project.id %}">
-                                        {{notification.invit.project.title}}
-                                    </a></strong>
-                                </p>
-                            </div>
-                            
-                        {% else %}
-                            <div class="flex">
-                                <div class="notification-bar {% if notification.invit %}blue{% endif%}"></div>
-                                <p>
-                                    <strong><a class="no-underline black" href="{% url 'profile' notification.invit.sender.id %}">
-                                    {{notification.invit.sender.username}}</a></strong> vous a envoyer une 
-                                    invitation au projet: <strong>{{notification.invit.project.title}}</strong>
-                                </p>
-                            </div>
-                                
-                    
-                            {% if notification.invit.status == 'P' %}
-                            <div>
-                                <form class="user-form" action="" method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="invite" id="" value="{{notification.invit.id}}">
-                                    <input type="hidden" name="project" id="" value="{{notification.invit.project.id}}">
-                                    <input type="submit" name="" id="" value="Accepter">
-                                </form>
-                            </div>
+
+                <div class="hflex notification">   
+
+                        {% if notification.invit %}
+
+                            {% if notification.title == 'A' %}
+
+                                <div class="flex">
+                                    <div class="notification-bar {% if notification.invit %}blue{% endif%}"></div>
+                                    <p>
+                                        <strong><a class="no-underline black" href="{% url 'profile' notification.invit.receiver.id %}">
+                                            {{ notification.invit.receiver.username }}
+                                        </a></strong> a accepté votre invitation au projet: 
+                                        <strong><a class="no-underline black" href="{% url 'project_tasks' notification.invit.project.id %}">
+                                            {{notification.invit.project.title}}
+                                        </a></strong>
+                                    </p>
+                                </div>
                                 
                             {% else %}
-                                <div class="user-btn member">
-                                    <p>Accepté</p>
+                                <div class="hflex full">
+                                    <div class="hflex">
+                                        <div class="notification-bar {% if notification.invit %}blue{% endif%}"></div>
+                                        <p>
+                                            <strong><a class="no-underline black" href="{% url 'profile' notification.invit.sender.id %}">
+                                            {{notification.invit.sender.username}}</a></strong> vous a envoyer une 
+                                            invitation au projet: <strong>{{notification.invit.project.title}}</strong>
+                                        </p>
+                                    </div>
+                                                                        
+                                    {% if notification.invit.status == 'P' %}
+                                        <div>
+                                            <form class="user-form" action="" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="invite" id="" value="{{notification.invit.id}}">
+                                                <input type="hidden" name="project" id="" value="{{notification.invit.project.id}}">
+                                                <input type="submit" name="" id="" value="Accepter">
+                                            </form>
+                                        </div>
+                                        
+                                    {% else %}
+                                        <div class="user-btn member">
+                                            <p>Accepté</p>
+                                        </div>
+                                    {% endif %}
+
+
                                 </div>
-                            {% endif %}
+                            
+                                {% endif %}
+
+                        {% else %}
+
+                            <div class="flex">
+                                <div class="notification-bar {% if notification.invit %}blue{% endif%}"></div>
+
+                                <div class="vflex start">
+                                    <a class="no-underline" href="{% url 'project_tasks' notification.task.project.id %}">
+                                        <h5 class="small-text title">{{notification.task.project.title}}</h5>
+                                    </a>
+            
+                                    {% if notification.title == 'T' %}
+                                    <p>
+                                        La tache <strong><a class="no-underline black" href="{% url 'task_description' notification.task.project.id notification.task.id %}">
+                                            {{notification.task.title}}
+                                        </a></strong> est complete
+                                    </p>
+                                    {% endif %}
+                                </div>
+
                             </div>
                             
+
+
                         {% endif %}
-                    {% else %}
+                </div>
 
-                        <div class="flex">
-                            <div class="notification-bar {% if notification.invit %}blue{% endif%}"></div>
-
-                            <div class="vflex start">
-                                <a class="no-underline" href="{% url 'project_tasks' notification.task.project.id %}">
-                                    <h5 class="small-text title">{{notification.task.project.title}}</h5>
-                                </a>
-        
-                                {% if notification.title == 'T' %}
-                                <p>
-                                    La tache <strong><a class="no-underline black" href="{% url 'task_description' notification.task.project.id notification.task.id %}">
-                                        {{notification.task.title}}
-                                    </a></strong> est complete
-                                </p>
-                                {% endif %}
-                            </div>
-
-                        </div>
-                        
-
-
-                    {% endif %}
-            </div>
             {% endfor %}
         </div>
         

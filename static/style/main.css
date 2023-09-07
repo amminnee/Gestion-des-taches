@@ -357,7 +357,7 @@ body{
     height: 100%;
     box-sizing: border-box;
     right: 0;
-    max-width: 350px;
+    width: 350px;
 }
 
 .activity-box{
